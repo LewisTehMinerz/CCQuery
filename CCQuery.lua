@@ -6,12 +6,12 @@
 		
 ]]
 
-$ = {}
-CCQuery = $
+c = {}
+CCQuery = c
 
 --CCQuery Constants
-$.build = 1
-$.errors = true
+c.build = 1
+c.errors = true
 
 
 --Extra string methods
@@ -34,17 +34,17 @@ function string.split(self, pattern)
 end
 
 --CCQuery internal functions
-	$_ = {}
+	c_ = {}
 
 
-	function $_.error( ... )
+	function c_.error( ... )
 		if term.isColor then term.setTextColor( colors.red ) end
 		print(...)
 		term.setTextColor( colors.white )
 	end
 --Real CCQuery Functions
 
-function $.import(pImp)
+function c.import(pImp)
 	if _.isTable(pImp) then
 		for i,v in pairs(pImp) do
 			if _[i] == nil then
@@ -58,7 +58,7 @@ function $.import(pImp)
 	end
 end
 
-function $.wget( ... )
+function c.wget( ... )
 	local arg = { ... }
 	local useT = {}
 	local req, url, tPost, tHeader
@@ -104,20 +104,20 @@ function $.wget( ... )
 	end
 end
 
-function $.dloadFile(pURL, pSave)
-	local req = $.wget{
+function c.dloadFile(pURL, pSave)
+	local req = c.wget{
 		["url"] = pURL
 	}
 	_.putFile(pSave,req)
 end
 
-function $.execUrl(pUrl,pFenv)
+function c.execUrl(pUrl,pFenv)
 	local fenv = pFenv ~= nil and pFenv or _G
-	local s = $.wget(pUrl)
+	local s = c.wget(pUrl)
 	return s:exec(fenv)
 end
 
-function $.meta(pTable, pMeta)
+function c.meta(pTable, pMeta)
 	if pMeta then
 		setmetatable(pTable, pMeta)
 	else
@@ -125,16 +125,16 @@ function $.meta(pTable, pMeta)
 	end
 end
 
-function $.putFile(pFile, pContent)
-	if $.isTable(pContent) then
-		pContent = $.serialize(pContent)
+function c.putFile(pFile, pContent)
+	if c.isTable(pContent) then
+		pContent = c.serialize(pContent)
 	end
 	local f = fs.open(pFile, "w")
 	f.write(pContent)
 	f.close()
 end
 
-function $.getFile(pFile)
+function c.getFile(pFile)
 	if fs.exists(pFile) then
 		local f = fs.open(pFile,"r")
 		local r = f.readAll()
@@ -148,19 +148,19 @@ function $.getFile(pFile)
 	end
 end
 
-function $.addToFile(pFile,pAdd,pNewLine)
+function c.addToFile(pFile,pAdd,pNewLine)
 	if pNewLine then
 		pAdd = "\n"..pAdd
 	end
-	local pre = $.getFile(pFile)
+	local pre = c.getFile(pFile)
 	if pre == false then
 		return false
 	end
-	$.putFile(pFile,pre..pAdd)
+	c.putFile(pFile,pre..pAdd)
 	return true
 end
 
-function $.cloneTable(pTable, inTable, pJustIf)
+function c.cloneTable(pTable, inTable, pJustIf)
 	local r = inTable or {} 
 	local justIf
 	if pJustIf then
@@ -171,8 +171,8 @@ function $.cloneTable(pTable, inTable, pJustIf)
 	
 	for i,v in pairs(pTable) do
 		if justIf(i,v) then
-			if $.isTable(v) then
-				r[i] = $.cloneTable(v)
+			if c.isTable(v) then
+				r[i] = c.cloneTable(v)
 			else
 				r[i] = v
 			end
@@ -181,7 +181,7 @@ function $.cloneTable(pTable, inTable, pJustIf)
 	return r
 end
 
-function $.loadAPI(pName,pUrl)
+function c.loadAPI(pName,pUrl)
 	local lPath
 	if fs.exists(pName) then
 		lPath = pName
@@ -197,7 +197,7 @@ function $.loadAPI(pName,pUrl)
 	os.loadAPI(lPath)
 end
 
-function $.checkVersion(v1, v2)
+function c.checkVersion(v1, v2)
 	if v1 == v2 then
 		return 0
 	else
@@ -220,7 +220,7 @@ end
 
 local dT = {"Number","String","Boolean","Table","Function","Nil"}
 for i,v in pairs(dT) do
-	$["is"..v] = function( ... )
+	c["is"..v] = function( ... )
 		local h = { ... }
 		for i,vf in pairs(h) do
 			if type(vf) ~= v:lower() then
@@ -231,12 +231,12 @@ for i,v in pairs(dT) do
 	end
 end
 
-function $.isEmpty(g)
-	if $.isTable(g) then
+function c.isEmpty(g)
+	if c.isTable(g) then
 	  if #g == 0 then
 		  return true
 		end
-	elseif $.isString(g) then
+	elseif c.isString(g) then
 	  if g:len == 0 then
 		  return true
 		end
@@ -244,23 +244,23 @@ function $.isEmpty(g)
 	return false
 end
 
-function $.isset(pVal, pDo)
+function c.isset(pVal, pDo)
 	if pVal ~= nil then
 		pDo()
 	end
 end
 
-function $.mustBe(pV, pT)
+function c.mustBe(pV, pT)
 	if type(pV) ~= pT then
-		$_.error("Var must be a "..pV..". Gets a "..type(pV))
+		c_.error("Var must be a "..pV..". Gets a "..type(pV))
 	end 
 end
 
-function $.equals(p1,p2)
+function c.equals(p1,p2)
 	if type(p1) == type(p2) then
-		if $.isString(p1,p2) then
+		if c.isString(p1,p2) then
 			return p1:lower() == p2:lower()
-		elseif $.isNumber(p1,p2) then
+		elseif c.isNumber(p1,p2) then
 			return p1 == p2
 		end
 	else
@@ -268,15 +268,15 @@ function $.equals(p1,p2)
 	end
 end
 
-function $.extents(pObj, pFind)
-	if $.isString(pObj) then
+function c.extents(pObj, pFind)
+	if c.isString(pObj) then
 		for i,v in pairs(pTable) do
 			if not string.find(pFind, v) then
 				return false
 			end
 		end
 		return true
-	elseif $.isTable(pObj) then
+	elseif c.isTable(pObj) then
 		for i,v in pairs(pObj) do
 			if v == pObj then
 				return true,i
@@ -286,36 +286,36 @@ function $.extents(pObj, pFind)
 	end
 end
 
-function $.config(pName, pIfNotExists)
+function c.config(pName, pIfNotExists)
 	local t,mt = {},{}
-	mt.$_index = mt
-	$.meta(t,mt)
+	mt.c_index = mt
+	c.meta(t,mt)
 		
 	function mt:save()
-		local cT = $.cloneTable(self,{},function (i,v)
+		local cT = c.cloneTable(self,{},function (i,v)
 			return i:sub(1,2) ~= "__"
 		end)
-		$.putFile(self.__path,_.serialize(cT))
+		c.putFile(self.__path,_.serialize(cT))
 	end
 	
 	function mt:load()
-		local lTable = $.unserialize($.getFile(self.$_path))
-		$.cloneTable(lTable,self)
+		local lTable = c.unserialize(c.getFile(self.c_path))
+		c.cloneTable(lTable,self)
 	end
 	
-	m.$_path = ".config/"..pName
+	m.c_path = ".config/"..pName
 	if fs.exists(m.__path) then
 		m:load()
 	else
 		if pIfNotExists then
-			$.cloneTable(pIfNotExists,self)
+			c.cloneTable(pIfNotExists,self)
 		end
 	end
 	
 	return t
 end
 
-function $.serialize(pTable, pType)
+function c.serialize(pTable, pType)
 	--if _.equals(pType, "json") then
 		--json
 		--tbd
@@ -324,19 +324,19 @@ function $.serialize(pTable, pType)
 		return textutils.serialize(pTable)
 	--end
 end
-$.serialise = $.serialize
+c.serialise = c.serialize
 
-function $.unserialize(pTable, pType)
+function c.unserialize(pTable, pType)
 	if pType == "json" then
 
 	else
 		return textutils.unserialize( pTable )
 	end
 end
-$.unserialise = $.unserialize
+c.unserialise = c.unserialize
 
 
-function $.newClass(pName, pTable, pMainClass)
+function c.newClass(pName, pTable, pMainClass)
 	if not _G.class then
 		_G.class = {}
 		_G.new = {}
@@ -374,19 +374,19 @@ function $.newClass(pName, pTable, pMainClass)
 	end
 end
 
-function $.newClassFromString(pStr)
+function c.newClassFromString(pStr)
 	--TBD
 end
 
-function $.importClass(pFile)
-	$.newClassFromString( $.getFile( pFile ) )
+function c.importClass(pFile)
+	c.newClassFromString( c.getFile( pFile ) )
 end
 
-function $.isObject(pV)
+function c.isObject(pV)
 	return pV.__tree:sub(1,5) == "CCQueryO" 
 end
 
-function $.isA(pWhat, pObj)
+function c.isA(pWhat, pObj)
 	return pObj.__class == pWhat
 end
 
