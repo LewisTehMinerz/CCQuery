@@ -30,6 +30,5 @@ jQuery for ComputerCraft
 |c.serialize(table Table, [string **format**])|string|Serialize the table into a string|
 |c.unserialize(string Value, [string **format**]["lua"])|table|Create a table from the string|
 |c.sortField(table Table, string Field)|table|Sort the table with Selection Sort. table[i].field must be a number|
-
 |c.newClass(string Name, table class, [table Mainclass]|nil|Creates a new Class from a Table|
 |new.*CLASSNAME*(*CLASS ARGS*)|table/class|Create a new Object of a Class|
