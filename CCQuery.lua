@@ -237,7 +237,7 @@ function c.isEmpty(g)
 		  return true
 		end
 	elseif c.isString(g) then
-	  if g:len == 0 then
+	  if g:len() == 0 then
 		  return true
 		end
 	end
