@@ -7,9 +7,9 @@
 ]]
 
 $ = {}
-down = $
+CCQuery = $
 
---Down Constants
+--CCQuery Constants
 $.build = 1
 $.errors = true
 
