@@ -1,0 +1,2 @@
+# CCQuery
+jQuery for ComputerCraft
