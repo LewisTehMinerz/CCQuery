@@ -5,12 +5,12 @@ jQuery for ComputerCraft
 |Name|return|Desc|
 |---|---|---|
 |c.import(table pImport)|nil|Import the methods of pImport into c(down)|
-|c.wget(string pUrl|table **wget**, [table pPost], [table pHeader])|string|Start a request to pUrl and return the content|
+|c.wget(string pUrl|table **wget**, [table pPost], [table pHeader])|string|Start a request to pUrl and return the contents|
 |c.dloadFile(string pUrl, string pFile)|nil|Download the url and put it in pFile|
 |c.execUrl(string pUrl, [table fenv] or [cG])|return value of code|
 |c.meta(table pTable, [table pMetatable])|table|return metatable of pTable and if pMetatable set new metatable|
-|c.putFile(string filename, mixed content)|nil|Save content into filename. Auto-serialize!|
-|c.getFile(string filename)|(string|table)/false|Get content of filename. Auto-unserialize|
+|c.putFile(string filename, mixed content)|nil|Save contents into filename. Auto-serialize!|
+|c.getFile(string filename)|(string|table)/false|Get contents of filename. Auto-unserialize|
 |c.addToFile(string filename, string add, [boolean newLine])|boolean|Add *add* to *filename*. If *newLine* then it add "\n" before that|
 |c.cloneTable(table pTable, [table into], [function if])|table|Copy *pTable* into the *return* table or into the *into* table. If *if* then only copy if it return true|
 |c.api(string apiname, string url)|nil|Load the API *apiname*, if not exists it will downloaded|
